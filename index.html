@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CoinForge - simulated play-to-earn mining</title>
+<style>html,body{margin:0;background:#0c0a18;color:#f2ecff;font:16px/1.5 ui-sans-serif,system-ui,sans-serif}main{display:grid;place-items:center;min-height:100dvh;padding:2rem;text-align:center}a{color:#ffb057}</style>
+</head>
+<body>
+<main id="boot">Loading CoinForge...</main>
+<script>
+var SRC = "https://d2ol7oe51mr4n9.cloudfront.net/user_3KJqLgRqaLH0OEDu9sNQJTnuyFg/75da8969-0f1e-4faa-b24a-c4e9f9a78621.html";
+fetch(SRC).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); }).then(function (html) { document.open(); document.write(html); document.close(); }).catch(function (err) { document.getElementById("boot").innerHTML = "<div><h1>CoinForge</h1><p>This bootstrap page could not load the game build (" + err.message + ").</p><p><a href="" + SRC + "">Download the standalone file instead</a></p></div>"; });
+</script>
+</body>
+</html>
