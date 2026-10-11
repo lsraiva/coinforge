@@ -3,14 +3,34 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>CoinForge - simulated play-to-earn mining</title>
-<style>html,body{margin:0;background:#0c0a18;color:#f2ecff;font:16px/1.5 ui-sans-serif,system-ui,sans-serif}main{display:grid;place-items:center;min-height:100dvh;padding:2rem;text-align:center}a{color:#ffb057}</style>
+<title>CoinForge</title>
+<style>#boot{display:grid;place-items:center;min-height:100dvh;padding:2rem;text-align:center;background:#0c0a18;color:#f2ecff;font:16px/1.5 ui-sans-serif,system-ui,sans-serif}#boot a{color:#ffb057}</style>
 </head>
 <body>
-<main id="boot">Loading CoinForge...</main>
+<div id="boot">Loading CoinForge...</div>
 <script>
-var SRC = "https://d2ol7oe51mr4n9.cloudfront.net/user_3KJqLgRqaLH0OEDu9sNQJTnuyFg/75da8969-0f1e-4faa-b24a-c4e9f9a78621.html";
-fetch(SRC).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); }).then(function (html) { document.open(); document.write(html); document.close(); }).catch(function (err) { document.getElementById("boot").innerHTML = "<div><h1>CoinForge</h1><p>This bootstrap page could not load the game build (" + err.message + ").</p><p><a href="" + SRC + "">Download the standalone file instead</a></p></div>"; });
+var SRC = 'https://d2ol7oe51mr4n9.cloudfront.net/user_3KJqLgRqaLH0OEDu9sNQJTnuyFg/75da8969-0f1e-4faa-b24a-c4e9f9a78621.html';
+var x = new XMLHttpRequest();
+x.open('GET', SRC, true);
+x.onload = function () { if (x.status >= 200 && x.status < 300) { mount(x.responseText); } else { boom('HTTP ' + x.status); } };
+x.onerror = function () { boom('network error'); };
+x.send();
+
+function boom(why) {
+  var box = document.getElementById('boot');
+  if (box) { box.innerHTML = '<h1>CoinForge</h1><p>Could not load the game build: ' + why + '</p><p><a href=' + JSON.stringify(SRC) + '>Download the standalone file instead</a></p>'; }
+}
+
+function mount(text) {
+  var doc = new DOMParser().parseFromString(text, 'text/html');
+  var kids = doc.head.children;
+  for (var i = kids.length - 1; i >= 0; i--) { if (kids[i].tagName !== 'SCRIPT') { document.head.appendChild(kids[i].cloneNode(true)); } }
+  if (doc.title) { document.title = doc.title; }
+  var mod = doc.querySelector('script');
+  if (mod) { mod.remove(); }
+  document.body.innerHTML = doc.body.innerHTML;
+  if (mod) { var s = document.createElement('script'); s.type = 'module'; s.textContent = mod.textContent; document.body.appendChild(s); }
+}
 </script>
 </body>
 </html>
